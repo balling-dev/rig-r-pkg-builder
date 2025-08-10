@@ -99,14 +99,6 @@ for (version in r_versions) {
   })
   cat("Current R version:", r_version_check, "\n")
 
-  # Create version-specific library directory
-  lib_dir <- paste0("/opt/R/", version, "/lib/R/site-library")
-  dir.create(lib_dir, recursive = TRUE, showWarnings = FALSE)
-
-  # Set library paths
-  cat("Setting library path to:", lib_dir, "\n")
-  .libPaths(c(lib_dir, .libPaths()))
-
   # Install packages for this R version
   if (safe_install(packages, version)) {
     success_count <- success_count + 1
