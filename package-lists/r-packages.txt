@@ -1,0 +1,29 @@
+# Core development tools
+pak
+devtools
+roxygen2
+decor
+
+# Code quality and testing
+lintr
+styler
+cyclocomp
+
+# Documentation
+pkgdown
+rsconnect
+
+# Utility packages
+sessioninfo
+RcppSimdJson
+desc
+miniCRAN
+
+# Package management and dependencies
+remotes
+withr
+
+# Additional packages commonly used in R package development
+testthat
+knitr
+rmarkdown

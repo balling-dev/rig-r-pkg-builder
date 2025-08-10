@@ -1,0 +1,37 @@
+# Docker build artifacts
+*.tar
+*.tar.gz
+
+# Logs
+logs/
+*.log
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# Local environment files
+.env
+.env.local
+.env.*.local
+
+# Test outputs
+test-results/
+coverage/

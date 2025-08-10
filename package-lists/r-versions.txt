@@ -1,0 +1,14 @@
+# R versions available in rig docker image
+
+# Current stable release
+release
+
+# Development versions
+next
+devel
+
+# Older stable releases
+4.4.3
+4.3.3
+4.2.3
+4.1.3
