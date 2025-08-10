@@ -128,4 +128,14 @@ if (success_count == total_count) {
   quit(status = 1)
 }
 
+# Switch to R release
+version <- "release"
+switch_cmd <- paste("rig default", version)
+switch_result <- tryCatch({
+  system(switch_cmd, ignore.stdout = TRUE, ignore.stderr = TRUE)
+}, error = function(e) {
+  cat("Warning: Could not switch to R version:", version, "\n")
+  1
+})
+
 cat("R packages installation script completed.\n")
