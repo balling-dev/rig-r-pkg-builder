@@ -9,7 +9,7 @@ echo "Installing OS packages for R package development..."
 apt-get update -qq -y
 
 # Default package list
-PACKAGES="libcurl4-openssl-dev libxml2-dev libfontconfig1-dev libssl-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev qpdf pandoc jq git wget curl unzip tar libgit2-dev libx11-dev libglpk-dev"
+PACKAGES="libcurl4-openssl-dev libxml2-dev libfontconfig1-dev libssl-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev qpdf pandoc jq git wget curl unzip tar libgit2-dev libx11-dev libglpk-dev sudo"
 
 echo "Installing packages: $PACKAGES"
 
