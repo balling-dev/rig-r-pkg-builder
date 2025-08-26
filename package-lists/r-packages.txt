@@ -1,5 +1,4 @@
 # Core development tools
-pak
 devtools
 roxygen2
 decor

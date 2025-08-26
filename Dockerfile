@@ -31,7 +31,7 @@ COPY scripts/ /tmp/scripts/
 RUN chmod +x /tmp/scripts/*.sh \
   && /tmp/scripts/install-os-packages.sh \
   && /tmp/scripts/install-additional-tools.sh \
-  && Rscript /tmp/scripts/install-r-packages.R \
+  && /tmp/scripts/install-r-packages.sh \
   && rm -rf /tmp/package-lists \
   && Rscript -e "pak::cache_clean()" \
   && Rscript -e "pak::meta_clean(force = TRUE)" \
