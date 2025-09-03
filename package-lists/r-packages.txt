@@ -2,6 +2,7 @@
 devtools
 roxygen2
 decor
+yaml
 
 # Code quality and testing
 lintr
