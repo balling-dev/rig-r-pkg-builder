@@ -27,3 +27,12 @@ withr
 testthat
 knitr
 rmarkdown
+cli
+dplyr
+connectapi
+glue
+rlang
+httr
+jsonlite
+readr
+purrr
