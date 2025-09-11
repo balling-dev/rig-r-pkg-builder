@@ -33,6 +33,27 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
+  telemetry:
+    name: Log Pipeline Metrics
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Log pipeline start metric
+        run: |
+          chmod +x .github/send_pipeline_metrics.sh
+          ./.github/send_pipeline_metrics.sh
+        env:
+          TELEMETRY_AZURE_CLIENT_ID: ${{ secrets.TELEMETRY_AZURE_CLIENT_ID }}
+          TELEMETRY_AZURE_CLIENT_SECRET: ${{ secrets.TELEMETRY_AZURE_CLIENT_SECRET }}
+          TELEMETRY_AZURE_SCOPE: ${{ secrets.TELEMETRY_AZURE_SCOPE }}
+          TELEMETRY_AZURE_TENANT_ID: ${{ secrets.TELEMETRY_AZURE_TENANT_ID }}
+          TELEMETRY_API_URL: ${{ secrets.TELEMETRY_API_URL }}
+          SERVICE_VERSION: ${{ secrets.SERVICE_VERSION || '1.0.0' }}
+          TELEMETRY_ID: ${{ secrets.TELEMETRY_ID }}
+
   build-and-push:
     runs-on: ubuntu-latest
     permissions:
