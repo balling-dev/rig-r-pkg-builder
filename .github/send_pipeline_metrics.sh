@@ -110,14 +110,32 @@ metric_json='{
                     },
                     "metrics": [
                         {
-                            "name": "'"$TELEMETRY_ID"'_run_events",
+                            "name": "'"$TELEMETRY_ID"'",
                             "unit": "1",
-                            "description": "Gauge of $TELEMETRY_ID runs",
+                            "description": "Execution events for automation tools and processes",
                             "gauge": {
                                 "dataPoints": [
                                     {
                                         "asInt": "1",
-                                        "timeUnixNano": "'"$timestamp"'"
+                                        "timeUnixNano": "'"$timestamp"'",
+																				"attributes": [
+					    															{
+						    															"key": "type",
+						    															"value": { "stringValue": "gh_docker"}
+					    															},
+					    															{
+						    															"key": "name",
+						    															"value": { "stringValue": "'"$GITHUB_REPOSITORY"'"}
+					    															},
+					    															{
+						    															"key": "env",
+						    															"value": { "stringValue": "prd"}
+					    															},
+					    															{
+						    															"key": "display_name",
+						    															"value": { "stringValue": "R rig docker"}
+					    															}
+				        												] 
                                     }
                                 ]
                             }
