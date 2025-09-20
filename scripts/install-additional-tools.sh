@@ -18,6 +18,9 @@ get_latest_release_url() {
 # Install Quarto CLI
 echo "Installing Quarto CLI..."
 QUARTO_URL=$(get_latest_release_url "quarto-dev/quarto-cli" "linux-amd64\\.deb")
+# fix to v1.7.34 since more recent versions cannot publish quarto
+# content to connect servers
+QUARTO_URL="https://github.com/quarto-dev/quarto-cli/releases/download/v1.7.34/quarto-1.7.34-linux-amd64.deb"
 if [ -n "$QUARTO_URL" ]; then
     echo "Downloading Quarto from: $QUARTO_URL"
     wget -q "$QUARTO_URL" -O /tmp/quarto-linux-amd64.deb
