@@ -34,7 +34,7 @@ if (file.exists(packages_file)) {
     "devtools", "roxygen2", "decor",
     "lintr", "styler", "cyclocomp",
     "pkgdown", "rsconnect",
-    "sessioninfo", "RcppSimdJson", "desc", "miniCRAN",
+    "sessioninfo", "desc", "miniCRAN",
     "remotes", "withr", "testthat", "knitr", "rmarkdown"
   )
 }
