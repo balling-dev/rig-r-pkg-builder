@@ -6,7 +6,8 @@
 # - Common R packages pre-installed for multiple R versions
 # - Additional tools (quarto-cli, bbi)
 
-FROM ghcr.io/r-lib/rig/r:latest
+ARG BASE_IMAGE=ghcr.io/r-lib/rig/r:latest
+FROM ${BASE_IMAGE}
 
 LABEL maintainer="Kristoffer Winther Balling"
 LABEL description="R package development environment with pre-installed dependencies"
