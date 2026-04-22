@@ -63,6 +63,21 @@ jobs:
       attestations: write
       id-token: write
 
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - variant: all
+            base_image: "ghcr.io/r-lib/rig/r:latest"
+            tag_prefix: ""
+            tag_latest: "latest"
+          - variant: release
+            base_image: "ghcr.io/r-lib/rig/release"
+            tag_prefix: "release-"
+            tag_latest: "release"
+
+    name: "build-and-push (${{ matrix.variant }})"
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -86,17 +101,13 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            # Latest tag for main branch
-            type=ref,event=branch
-            # Weekly tag for scheduled builds
-            type=schedule,pattern=weekly-{{date 'YYYY-MM-DD'}}
-            # SHA tag for commits
-            type=sha,prefix={{branch}}-
-            # Latest tag
-            type=raw,value=latest,enable={{is_default_branch}}
+            type=ref,event=branch,prefix=${{ matrix.tag_prefix }}
+            type=schedule,pattern=${{ matrix.tag_prefix }}weekly-{{date 'YYYY-MM-DD'}}
+            type=sha,prefix=${{ matrix.tag_prefix }}{{branch}}-
+            type=raw,value=${{ matrix.tag_latest }},enable={{is_default_branch}}
           labels: |
-            org.opencontainers.image.title=R Package Development Environment
-            org.opencontainers.image.description=Docker image based on rig-r with pre-installed R package development dependencies
+            org.opencontainers.image.title=R Package Development Environment (${{ matrix.variant }})
+            org.opencontainers.image.description=Docker image based on rig-r with pre-installed R package development dependencies (${{ matrix.variant }} R versions)
             org.opencontainers.image.vendor=${{ github.repository_owner }}
 
       - name: Build Docker image
@@ -107,9 +118,9 @@ jobs:
           push: false
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          # Build but don't push for PRs
+          build-args: BASE_IMAGE=${{ matrix.base_image }}
+          cache-from: type=gha,scope=${{ matrix.variant }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.variant }}
           load: ${{ github.event_name == 'pull_request' }}
 
       - name: Push Docker image
@@ -122,8 +133,9 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          build-args: BASE_IMAGE=${{ matrix.base_image }}
+          cache-from: type=gha,scope=${{ matrix.variant }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.variant }}
 
       - name: Generate artifact attestation
         if: github.event_name != 'pull_request'
@@ -136,21 +148,22 @@ jobs:
       - name: Summary
         if: success()
         run: |
-          echo "## 🐳 Docker Build Summary" >> $GITHUB_STEP_SUMMARY
+          echo "## Docker Build Summary (${{ matrix.variant }})" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Image:** \`${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "**Variant:** ${{ matrix.variant }} (base: \`${{ matrix.base_image }}\`)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Tags:**" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           echo "${{ steps.meta.outputs.tags }}" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Build Status:** ✅ Success" >> $GITHUB_STEP_SUMMARY
+          echo "**Build Status:** Success" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           if [ "${{ github.event_name }}" != "pull_request" ]; then
             echo "**Registry:** Image pushed to GitHub Container Registry" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
-            echo "**Usage:** \`docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest\`" >> $GITHUB_STEP_SUMMARY
+            echo "**Usage:** \`docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ matrix.tag_latest }}\`" >> $GITHUB_STEP_SUMMARY
           else
             echo "**Registry:** Image built but not pushed (PR)" >> $GITHUB_STEP_SUMMARY
           fi
