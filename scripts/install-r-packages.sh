@@ -7,7 +7,7 @@ do
    rig default "${r_version}"
    Rscript -e 'cat(paste0("Using R package library: ", .libPaths()[2]))'
    Rscript -e 'install.packages("remotes", lib = .libPaths()[2])'
-   Rscript -e 'remotes::install_github("r-lib/pak@95c6b18d5ccaa22a422b03d7234927ef22f4dc4c", force = TRUE, lib = .libPaths()[2])'
+   Rscript -e 'remotes::install_github("r-lib/pak@00e4ec6e5e3cfad3d7431fef6ef645cfbd750b52", force = TRUE, lib = .libPaths()[2])'
    Rscript /tmp/scripts/install-r-packages.R
 done
 rig default release
