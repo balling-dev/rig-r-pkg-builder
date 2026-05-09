@@ -22,6 +22,9 @@ miniCRAN
 remotes
 withr
 
+# Quarto books and websites
+DT
+
 # Additional packages commonly used in R package development
 testthat
 knitr
