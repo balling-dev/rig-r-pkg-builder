@@ -9,7 +9,43 @@ echo "Installing OS packages for R package development..."
 apt-get update -qq -y
 
 # Default package list
-PACKAGES="libcurl4-openssl-dev libxml2-dev libfontconfig1-dev libssl-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev qpdf pandoc jq git wget curl unzip tar libgit2-dev libx11-dev libglpk-dev sudo texlive-xetex"
+PACKAGES="\
+  cmake \
+  curl \
+  git \
+  gsfonts \
+  jq \
+  libcurl4-openssl-dev \
+  libfontconfig1-dev \
+  libfreetype6-dev \
+  libfribidi-dev \
+  libgit2-dev \
+  libglpk-dev \
+  libharfbuzz-dev \
+  libicu-dev \
+  libjpeg-dev \
+  libleptonica-dev \
+  libmagick++-dev \
+  libpng-dev \
+  libpoppler-cpp-dev \
+  libssl-dev \
+  libtesseract-dev \
+  libtiff-dev \
+  libuv1-dev \
+  libwebp-dev \
+  libx11-dev \
+  libxml2-dev \
+  make \
+  pandoc \
+  poppler-data \
+  qpdf \
+  sudo \
+  tar \
+  tesseract-ocr-eng \
+  texlive-xetex \
+  unzip \
+  wget \
+  zlib1g-dev"
 
 echo "Installing packages: $PACKAGES"
 
